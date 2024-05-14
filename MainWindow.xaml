@@ -5,22 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SgsTestProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="404">
+        Title="MainWindow" Height="410" Width="404">
     <Grid>
-        <Label Content="Выбериет город:" HorizontalAlignment="Left" Margin="84,31,0,0" VerticalAlignment="Top" Width="122"/>
-        <ComboBox x:Name="sity_CB" HorizontalAlignment="Center" Margin="0,57,0,0" VerticalAlignment="Top" Width="244" SelectionChanged="CB_SelectionChanged"/>
+        <Label Content="Выбериет город:" HorizontalAlignment="Left" Margin="84,63,0,0" VerticalAlignment="Top" Width="122"/>
+        <ComboBox x:Name="sity_CB" HorizontalAlignment="Center" Margin="0,89,0,0" VerticalAlignment="Top" Width="244" SelectionChanged="CB_SelectionChanged"/>
 
-        <Label Content="Выбериет цех:" HorizontalAlignment="Left" Margin="84,91,0,0" VerticalAlignment="Top" Width="122"/>
-        <ComboBox x:Name="facility_CB" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="244"  SelectionChanged="CB_SelectionChanged"/>
+        <Label Content="Выбериет цех:" HorizontalAlignment="Left" Margin="84,123,0,0" VerticalAlignment="Top" Width="122"/>
+        <ComboBox x:Name="facility_CB" HorizontalAlignment="Center" Margin="0,149,0,0" VerticalAlignment="Top" Width="244"  SelectionChanged="CB_SelectionChanged"/>
 
-        <Label Content="Выбериет бригаду:" HorizontalAlignment="Left" Margin="84,156,0,0" VerticalAlignment="Top" Width="122"/>
-        <ComboBox x:Name="team_CB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="244"  SelectionChanged="CB_SelectionChanged"/>
+        <Label Content="Выбериет бригаду:" HorizontalAlignment="Left" Margin="84,188,0,0" VerticalAlignment="Top" Width="122"/>
+        <ComboBox x:Name="team_CB" HorizontalAlignment="Center" VerticalAlignment="Top" Width="244"  SelectionChanged="CB_SelectionChanged" Margin="0,218,0,0"/>
 
-        <Label Content="Выбериет сотрудника:" HorizontalAlignment="Left" Margin="84,216,0,0" VerticalAlignment="Top" Width="122"/>
-        <ComboBox x:Name="staff_CB" HorizontalAlignment="Center" Margin="0,242,0,0" VerticalAlignment="Top" Width="244"  SelectionChanged="CB_SelectionChanged"/>
- 
-        <Label Content="Укажите смену:" HorizontalAlignment="Left" Margin="84,271,0,0" VerticalAlignment="Top" Width="122"/>
-        <TextBox x:Name="shift_TB" HorizontalAlignment="Center" Margin="0,297,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="244" Height="20"/>
+        <Label Content="Выбериет сотрудника:" HorizontalAlignment="Left" Margin="84,248,0,0" VerticalAlignment="Top" Width="122"/>
+        <ComboBox x:Name="staff_CB" HorizontalAlignment="Center" Margin="0,274,0,0" VerticalAlignment="Top" Width="244"  SelectionChanged="CB_SelectionChanged"/>
+
+        <Label Content="Укажите смену:" HorizontalAlignment="Left" Margin="84,303,0,0" VerticalAlignment="Top" Width="122"/>
+        <TextBox x:Name="shift_TB" HorizontalAlignment="Center" Margin="0,329,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="244" Height="20"/>
+        <Button Content="Сброс" HorizontalAlignment="Center" Margin="0,38,0,0" VerticalAlignment="Top" Width="92" Click="Button_Click"/>
 
     </Grid>
 </Window>

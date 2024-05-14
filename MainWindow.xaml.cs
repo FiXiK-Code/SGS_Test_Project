@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SgsTestProject.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,28 +22,59 @@ namespace SgsTestProject
     public partial class MainWindow : Window
     {
 
-        private List<string> _sity_content = new List<string>();
-        private List<string> _facility_content = new List<string>();
+        private List<Sity> _sity_content = new List<Sity>();
+        private List<Facility> _facility_content = new List<Facility>();
+        private List<Team> _team_content = new List<Team>();
         private List<string> _staff_content = new List<string>();
-        private List<string> _team_content = new List<string>();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            for (int i = 1; i < 33; i++)
+            for (int i = 1; i < 5; i++)
             {
-                if (i <= 4) _sity_content.Add($"Sity {i}");
-                if (i <= 8) _facility_content.Add($"Facility {i}");
-                if (i <= 16) _team_content.Add($"Team {i}"); 
-                _staff_content.Add($"Staff {i}");
+                _sity_content.Add(new Sity
+                {
+                    Id = i,
+                    Name = $"Sity {i}"
+                });
             }
 
+            var buferId = 1;
+            for (int i = 1; i < 9; i++)
+            {
+                _facility_content.Add(new Facility
+                {
+                    Id = i,
+                    Name = $"Facility {i}",
+                    SityId = buferId
+                });
+                if(i % 2 == 0) { buferId++; }
+            }
 
-            sity_CB.ItemsSource = _sity_content;
-            facility_CB.ItemsSource = _facility_content;
+            buferId = 1;
+            for (int i = 1; i < 17; i++)
+            {
+                _team_content.Add(new Team
+                {
+                    Id = i,
+                    Name = $"Team {i}",
+                    FacilityId = buferId
+                });
+                if (i % 2 == 0) { buferId++; }
+            }
+
+            for (int i = 1; i < 33; i++)
+            {
+                _staff_content.Add($"Staff {i}");
+            }
+            
+
+
+            sity_CB.ItemsSource = _sity_content.Select(p => p.Name);
+            facility_CB.ItemsSource = _facility_content.Select(p => p.Name);
+            team_CB.ItemsSource = _team_content.Select(p => p.Name);
             staff_CB.ItemsSource = _staff_content;
-            team_CB.ItemsSource = _team_content;
 
         }
 
@@ -52,50 +84,70 @@ namespace SgsTestProject
 
             if (parent.SelectedValue == null) return;
 
-            var from = (Convert.ToInt32(parent.SelectedValue.ToString().Split(' ').Last())  * 2) - 1;
-            var to = from + 1;
+            var selected = Convert.ToInt32(parent.SelectedValue.ToString().Split(' ').Last());
 
 
             switch (parent.Name)
             {
                 case "sity_CB":
-                    
-                    facility_CB.ItemsSource = _facility_content.Where(p => Convert.ToInt32(p.Split(' ').Last()) >= from && (Convert.ToInt32(p.Split(' ').Last()) <= to));
-                    from = (from * 2) -1;
-                    to = from + 1;
 
-                    team_CB.ItemsSource = _team_content.Where(p => Convert.ToInt32(p.Split(' ').Last()) >= from && (Convert.ToInt32(p.Split(' ').Last()) <= to + 2));
-                    from = (from * 2) - 1;
-                    to = from + 1;
+                    var facility_content = _facility_content.Where(p => p.SityId == selected);
 
-                    staff_CB.ItemsSource = _staff_content.Where(p => Convert.ToInt32(p.Split(' ').Last()) >= from && (Convert.ToInt32(p.Split(' ').Last()) <= to + 6));
+                    facility_CB.ItemsSource = facility_content.Select(p => p.Name);
+                   
+                    team_CB.ItemsSource = _team_content.Where(p => facility_content.Select(o => o.Id).Contains(p.FacilityId)).Select(p => p.Name);
 
                     break;
                 case "facility_CB":
 
-                    team_CB.ItemsSource = _team_content.Where(p => Convert.ToInt32(p.Split(' ').Last()) >= from && (Convert.ToInt32(p.Split(' ').Last()) <= to));
-                    from = (from * 2) - 1;
-                    to = from + 1;
+                    var team_content = _team_content.Where(p => p.FacilityId == selected);
 
-                    staff_CB.ItemsSource = _staff_content.Where(p => Convert.ToInt32(p.Split(' ').Last()) >= from && (Convert.ToInt32(p.Split(' ').Last()) <= to + 2));
+                    team_CB.ItemsSource = team_content.Select(p => p.Name);
+
+                    if (sity_CB.SelectedValue == null)
+                    {
+                        var selectedObject = _facility_content.FirstOrDefault(p => p.Id == selected);
+                        sity_CB.ItemsSource = _sity_content.Where(p => p.Id == selectedObject.SityId).Select(p => p.Name);
+                    }
 
                     break;
                 case "team_CB":
 
-                    staff_CB.ItemsSource = _staff_content.Where(p => Convert.ToInt32(p.Split(' ').Last()) >= from && (Convert.ToInt32(p.Split(' ').Last()) <= to));
+                    if (facility_CB.SelectedValue == null)
+                    {
+                        var selectedObject = _team_content.FirstOrDefault(p => p.Id == selected);
+                        facility_CB.ItemsSource = _facility_content.Where(p => p.Id == selectedObject.FacilityId).Select(p => p.Name);
+                    }
+                    if (sity_CB.SelectedValue == null)
+                    {
+                        var selectedObject = _team_content.FirstOrDefault(p => p.Id == selected);
+                        var selectedParent = _facility_content.FirstOrDefault(p => p.Id == selectedObject.FacilityId);
+                        sity_CB.ItemsSource = _sity_content.Where(p => p.Id == selectedParent.SityId).Select(p => p.Name);
+                    }
 
                     break;
-                case "staff_CB":
-
-                    
-
-                    break;
+               
                 
             }
             
             
 
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            sity_CB.SelectedValue = null;
+            sity_CB.ItemsSource = _sity_content.Select(p => p.Name);
+
+            facility_CB.SelectedValue = null;
+            facility_CB.ItemsSource = _facility_content.Select(p => p.Name);
+
+            team_CB.SelectedValue = null;
+            team_CB.ItemsSource = _team_content.Select(p => p.Name);
+
+            staff_CB.SelectedValue = null;
+            staff_CB.ItemsSource = _staff_content;
         }
     }
 }
