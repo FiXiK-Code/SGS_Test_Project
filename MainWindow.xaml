@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SgsTestProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="410" Width="404">
+        Title="MainWindow" Height="432" Width="404">
     <Grid>
         <Label Content="Выбериет город:" HorizontalAlignment="Left" Margin="84,63,0,0" VerticalAlignment="Top" Width="122"/>
         <ComboBox x:Name="sity_CB" HorizontalAlignment="Center" Margin="0,89,0,0" VerticalAlignment="Top" Width="244" SelectionChanged="CB_SelectionChanged"/>
