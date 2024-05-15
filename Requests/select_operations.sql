@@ -1,15 +1,15 @@
 SELECT '[' + (
     select concat('{',
     '"ID":',ID,',',
-    '"Number":',[Number],',',
-    '"Type":',[Type],',',
-    '"Length":',[Length],',',
-    '"Width":',[Width],',',
-    '"Height":',[Height],',',
-    '"IsEmpty":',[IsEmpty],',',
-    '"ArrivalDate":','"',CONVERT(varchar, ArrivalDate, 104),'"',
+    '"ContainerID":',[ContainerID],',',    
+    '"StartDate":','"',CONVERT(varchar, StartDate, 104),'"',',',
+    '"EndDate":','"',CONVERT(varchar, EndDate, 104),'"',',',
+    '"OperationType":','"',OperationType,'"',',',
+    '"OperatorName":','"',OperatorName,'"',',',
+    '"InspectionLocation":','"',InspectionLocation,'"',
     '},')
     as [data()]
-    from Containers
+    from Operations
+    where ContainerID = ContainerID
     for xml PATH('') 
-) + ']' as result 
+) + ']' as result
